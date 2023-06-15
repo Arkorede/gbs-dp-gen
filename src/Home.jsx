@@ -147,7 +147,12 @@ function App() {
               >
                 Resize image
               </label>
-              <input type="range" min="0" max="100" className="" />
+              <input
+                type="range"
+                min="0"
+                max="100"
+                className="accent-black cursor-pointer"
+              />
             </div>
             <div className="flex items-center justify-center mt-20 mb-2">
               <button

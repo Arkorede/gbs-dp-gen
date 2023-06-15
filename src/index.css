@@ -46,3 +46,45 @@ input[type="range"]::-moz-range-track {
   background-color: #4c51bf;
   border-radius: 5px;
 } */
+
+/* @media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="range"] {
+    overflow: hidden;
+    width: 100%;
+    -webkit-appearance: none;
+    background-color: #adb5bd;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 10px;
+    -webkit-appearance: none;
+    color: #000;
+    margin-top: -1px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    -webkit-appearance: none;
+    height: 20px;
+    border-radius: 50%;
+    margin-bottom: -20px;
+    cursor: pointer;
+    background: #fff;
+    box-shadow: -80px 0 0 80px #000;
+  }
+} */
+/* MOZILLA */
+/* input[type="range"]::-moz-range-progress {
+  background-color: #000;
+}
+input[type="range"]::-moz-range-track {
+  background-color: #9a905d;
+} */
+
+/* Internet Explorer*/
+/* input[type="range"]::-ms-fill-lower {
+  background-color: #43e5f7;
+}
+input[type="range"]::-ms-fill-upper {
+  background-color: #9a905d;
+} */

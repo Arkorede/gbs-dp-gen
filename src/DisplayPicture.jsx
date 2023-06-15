@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import gadite_Logo1 from "./assets/gadite_Logo1.png";
 import left_arrow from "./assets/left_arrow.png";
 import display_picture from "./assets/display_picture.png";
@@ -5,12 +6,31 @@ import soldier from "./assets/soldier.png";
 import location_mark from "./assets/location_mark.png";
 import clock2 from "./assets/clock2.png";
 import calendar from "./assets/calendar.png";
+import { Link } from "react-router-dom";
+import Follow from "./dropdown/Follow";
 
 const DisplayPicture = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const handleClicksOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClicksOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClicksOutside);
+    };
+  }, [dropdownRef]);
+
   return (
     <div className="px-10">
       {/* Navbar */}
-      <nav className="relative mt-9">
+      <nav className="relative mt-9" ref={dropdownRef}>
         {/* Flex container */}
         <div className="flex items-start justify-between">
           {/* Logo */}
@@ -19,17 +39,18 @@ const DisplayPicture = () => {
           </div>
           {/* Menu Items */}
           <div className="hidden font-medium text-xl leading-[30px] space-x-20 md:flex md:max-xl:text-sm md:max-xl:space-x-16">
-            <div className="flex items-center justify-center gap-2 cursor-pointer md:max-xl:gap-2.5">
-              <a href="#" className="">
-                Follow GBS ‘23 online
-              </a>
+            <button
+              className="flex items-center justify-center gap-2 cursor-pointer md:max-xl:gap-2.5"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <p className="">Follow GBS ‘23 online</p>
               <ion-icon name="chevron-down-outline"></ion-icon>
               {/* <img
                 src={dropdown}
                 alt="dropdown menu"
                 className="w-[14.88px] h-[5px]"
               /> */}
-            </div>
+            </button>
           </div>
 
           {/* Hamburger Icon */}
@@ -44,6 +65,11 @@ const DisplayPicture = () => {
             </div>
           </button> */}
         </div>
+        {isOpen && (
+          <div className="absolute top-[46px] right-0">
+            <Follow />
+          </div>
+        )}
       </nav>
 
       {/* DISPLAY PICTURE */}
@@ -66,7 +92,7 @@ const DisplayPicture = () => {
                 <p className="font-light text-[13px] text-white leading-5">
                   Hello, I am a{" "}
                   <span className="font-semibold">Gadite{""}</span> from{" "}
-                  <span className="font semibold">University of Lagos</span>,
+                  <span className="font-semibold">University of Lagos</span>,
                   Nigeria and I’m so excited to be attending{" "}
                   <span className="font-semibold">
                     Gadites Bible Seminar 2023.
@@ -138,12 +164,15 @@ const DisplayPicture = () => {
           />
           <p className="font-medium text-xl leading-[30px]">PREVIOUS</p>
         </div>
-        <div className="flex flex-col">
-          <p className="font-medium text-xl leading-[30px]"></p>
+        <p className="font-bold text-3xl leading-[45px]">
+          Don’t forget to share the goodnews!!!{" "}
+        </p>
+        <Link to="/" className="flex flex-col items-center">
+          <p className="font-medium text-xl leading-[30px]">BACK</p>
           <div className="text-[40px]">
             <ion-icon name="arrow-undo-circle"></ion-icon>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );

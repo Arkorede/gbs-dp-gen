@@ -1,9 +1,29 @@
 // import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import gadite_Logo1 from "./assets/gadite_Logo1.png";
 import warrior from "./assets/warrior.png";
 import { useNavigate } from "react-router-dom";
+import Follow from "./dropdown/Follow";
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const handleClicksOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClicksOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClicksOutside);
+    };
+  }, [dropdownRef]);
+
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -11,36 +31,32 @@ function App() {
   };
 
   return (
-    <div className="px-10">
+    <div className="relative px-10">
       {/* Navbar */}
-      <nav className="relative mt-9">
+      <nav className="relative mt-9" ref={dropdownRef}>
         {/* Flex container */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-start justify-between">
           {/* Logo */}
           <div className="w-[86px] h-[119px]">
             <img src={gadite_Logo1} alt="Gadites logo" className="w-full" />
           </div>
           {/* Menu Items */}
           <div className="hidden font-medium text-xl leading-[30px] space-x-20 md:flex md:max-xl:text-sm md:max-xl:space-x-16">
-            <div className="flex items-center justify-center gap-[15px] cursor-pointer md:max-xl:gap-2.5">
-              <a href="#" className="">
-                Follow GBS online
-              </a>
+            <button
+              className="flex items-center justify-center gap-[15px] cursor-pointer md:max-xl:gap-2.5"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <p className="">Follow GBS ‘23 online</p>
               <ion-icon name="chevron-down-outline"></ion-icon>
-              {/* <img
-                src={dropdown}
-                alt="dropdown menu"
-                className="w-[14.88px] h-[5px]"
-              /> */}
-            </div>
+            </button>
           </div>
           {/* Button */}
-          <a
+          {/* <a
             href="#"
             className="hidden font-medium text-lg text-white bg-[#333333] pt-[14px] pb-[13px] px-[35px] rounded-lg leading-[30px] md:block md:max-xl:px-5"
           >
             Back Home
-          </a>
+          </a> */}
 
           {/* Hamburger Icon */}
           {/* <button
@@ -70,6 +86,11 @@ function App() {
             </div>
           </div>
         </div> */}
+        {isOpen && (
+          <div className="absolute top-[46px] right-0">
+            <Follow />
+          </div>
+        )}
       </nav>
 
       <div className="grid grid-cols-2 gap-[87px] mt-40">
